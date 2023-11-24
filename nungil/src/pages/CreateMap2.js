@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Backspace from "../components/Backspace";
@@ -71,8 +71,11 @@ const handleCopyClick = (textToCopy) => {
 };
 
 function CreateMap2() {
+  const location = useLocation();
+  const userId = new URLSearchParams(location.search).get("userId");
+
   const handleClick = () => {
-    handleCopyClick("https:..dda/dad/aaa/qqq/www./aaa/sssss/ddddd/ffff/ggg/"); // 원하는 URL로 변경, 추후 동적으로 변경해줘야 함
+    handleCopyClick("https://api.nungil.shop/api/user/" + userId); // 원하는 URL로 변경, 추후 동적으로 변경해줘야 함
   };
   return (
     <>
@@ -90,7 +93,7 @@ function CreateMap2() {
       </Setting>
       <CenterText>공유 링크</CenterText>
       <Address onClick={handleClick}>
-        https:..dda/dad/aaa/qqq/www./aaa/sssss/ddddd/ffff/ggg/
+        <p>https://api.nungil.shop/api/user/{userId}</p>
       </Address>
       <CenterBox>
         <ImgBox>
