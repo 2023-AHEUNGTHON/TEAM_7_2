@@ -26,27 +26,35 @@ function Main() {
           if (selectedMarker) {
             selectedMarker.setImage(
               new window.kakao.maps.MarkerImage(
-                process.env.PUBLIC_URL + "/asset/Icon/marker.png",
-                new window.kakao.maps.Size("30px", "30px")
+                process.env.PUBLIC_URL + "/img/basicMarker.svg",
+                new window.kakao.maps.Size("64px", "69px"),
+                {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  },
+                }
               )
             );
           }
 
           if (selectedMarker === marker) {
-            // 클릭된 마커를 다시 클릭하면 선택을 취소
             setSelectedMarker(null);
           } else {
             marker.setImage(
               new window.kakao.maps.MarkerImage(
-                process.env.PUBLIC_URL + "/asset/Icon/giftMarker.png",
-                new window.kakao.maps.Size("30px", "30px")
+                process.env.PUBLIC_URL + "/img/giftMarker.svg",
+                new window.kakao.maps.Size("64px", "69px"),
+                {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  },
+                }
               )
             );
             setSelectedMarker(marker);
           }
-
-          // 클릭된 마커 정보 콘솔에 출력
-          console.log(`Marker Clicked: ${place.placeName}`);
         };
 
         window.kakao.maps.event.addListener(marker, "click", handleClick);
@@ -54,7 +62,6 @@ function Main() {
         marker.setMap(window.map);
 
         return () => {
-          // 마커를 지도에서 제거할 때 필요한 clean-up 로직
           window.kakao.maps.event.removeListener(marker, "click");
           marker.setMap(null);
         };
@@ -62,33 +69,75 @@ function Main() {
     }
   }, [places, selectedMarker]);
 
-  const markerImage = {
-    src: process.env.PUBLIC_URL + "/img/basicMarker.svg",
-    size: {
-      width: 64,
-      height: 69,
-    },
-    options: {
-      offset: {
-        x: 27,
-        y: 69,
-      },
-    },
-  };
+  useEffect(() => {
+    if (window.kakao && window.kakao.maps) {
+      places.forEach((place) => {
+        const marker = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(
+            place.latitude,
+            place.longitude
+          ),
+          clickable: true,
+        });
 
-  const giftMarkerImage = {
-    src: process.env.PUBLIC_URL + "/img/giftMarker.svg",
-    size: {
-      width: 64,
-      height: 69,
-    },
-    options: {
-      offset: {
-        x: 27,
-        y: 69,
-      },
-    },
-  };
+        const handleClick = () => {
+          if (selectedMarker) {
+            selectedMarker.setImage(
+              new window.kakao.maps.MarkerImage(
+                process.env.PUBLIC_URL + "/img/basicMarker.svg",
+                new window.kakao.maps.Size("64px", "69px"),
+                {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  },
+                }
+              )
+            );
+          }
+
+          // Check if the clicked marker is the same as the selected marker
+          const isSameMarker =
+            selectedMarker &&
+            Math.abs(
+              selectedMarker.getPosition().getLat() -
+                marker.getPosition().getLat()
+            ) < 0.000001 &&
+            Math.abs(
+              selectedMarker.getPosition().getLng() -
+                marker.getPosition().getLng()
+            ) < 0.000001;
+
+          if (selectedMarker && isSameMarker) {
+            setSelectedMarker(null);
+          } else {
+            marker.setImage(
+              new window.kakao.maps.MarkerImage(
+                process.env.PUBLIC_URL + "/img/giftMarker.svg",
+                new window.kakao.maps.Size("64px", "69px"),
+                {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  },
+                }
+              )
+            );
+            setSelectedMarker(marker);
+          }
+        };
+
+        window.kakao.maps.event.addListener(marker, "click", handleClick);
+
+        marker.setMap(window.map);
+
+        return () => {
+          window.kakao.maps.event.removeListener(marker, "click");
+          marker.setMap(null);
+        };
+      });
+    }
+  }, [places, selectedMarker]);
 
   return (
     <>
@@ -105,14 +154,37 @@ function Main() {
             }}
             image={
               selectedMarker &&
-              selectedMarker.getPosition().equals(
-                new window.kakao.maps.LatLng(
-                  place.latitude,
-                  place.longitude
+              selectedMarker
+                .getPosition()
+                .equals(
+                  new window.kakao.maps.LatLng(place.latitude, place.longitude)
                 )
-              )
-                ? giftMarkerImage
-                : markerImage
+                ? {
+                    src: process.env.PUBLIC_URL + "/img/giftMarker.svg",
+                    size: {
+                      width: 64,
+                      height: 69,
+                    },
+                    options: {
+                      offset: {
+                        x: 27,
+                        y: 69,
+                      },
+                    },
+                  }
+                : {
+                    src: process.env.PUBLIC_URL + "/img/basicMarker.svg",
+                    size: {
+                      width: 64,
+                      height: 69,
+                    },
+                    options: {
+                      offset: {
+                        x: 27,
+                        y: 69,
+                      },
+                    },
+                  }
             }
             onClick={() => console.log(`Marker Clicked: ${place.placeName}`)}
           />

@@ -14,6 +14,8 @@ import ReadText from "./pages/ReadText";
 import QuizModal from "./pages/QuizModal"; 
 import QuizAnswer from "./pages/QuizAnswer";
 
+import MainTest from "./pages/MainTest";
+
 const Setting = styled.div`
   max-width: 393px;
   min-height: 100vh;
@@ -43,6 +45,8 @@ function App() {
 
           <Route path="/quizmodal" element={<QuizModal />} />
           <Route path="/quizanswer" element={<QuizAnswer />} />
+          
+          <Route path="/maintest" element={<MainTest /> } />
         </Routes>
       </BrowserRouter>
     </Setting>

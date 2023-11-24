@@ -10,7 +10,14 @@
        "latitude" : 37.6648429,
        "longitude" : 127.0581,
        "placeName" : "초코나무 숲",
-       "placeProvider" : "이명진"}
+       "placeProvider" : "이명진"},
+
+       {"placeId" : 3,
+       "latitude" : 37.5648429,
+       "longitude" : 127.0581,
+       "placeName" : "바나나 숲",
+       "placeProvider" : "조준영"
+       }
     ]
 
 }
