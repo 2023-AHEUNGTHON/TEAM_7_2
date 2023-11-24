@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
 import SaveLocation from "../components/SaveLocation";
 import useKakaoLoader from "../components/useKakaoLoader";
-import Button from "../components/Button";
+import Button2 from "../components/Button2";
 
 const Modal = styled.div`
   position: fixed;
@@ -30,11 +31,26 @@ const Address = styled.div`
   color: #909090;
   font-size: 0.875rem;
 `;
+const markerImage = {
+  src: process.env.PUBLIC_URL + 'img/giftMarker.svg',
+  size: {
+    width: 54,
+    height: 59,
+  },
+  options: {
+    offset: {
+      x: 27,
+      y: 69,
+    },
+  },
+};
 
 function Gift0() {
+  const navigate=useNavigate();
   const [position, setPosition] = useState();
   const [clickedAddress, setClickedAddress] = useState("");
   useKakaoLoader();
+  
 
   const searchDetailAddrFromCoords = (coords, callback) => {
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -61,6 +77,17 @@ function Gift0() {
     });
   };
 
+  const handleSubmit = () => {
+    console.log("클릭");
+    navigate('/gift',{
+        state:{
+            Address:clickedAddress,
+            lat:mouseEvent.latLng.getLat(),
+            lng:mouseEvent.latLng.getLng()
+        }
+  });
+}
+
   return (
     <>
       <SaveLocation />
@@ -77,16 +104,15 @@ function Gift0() {
           handleMarkerClick(mouseEvent);
         }}
       >
-        {position && <MapMarker position={position} />}
+        {position && <MapMarker position={position} image={markerImage}/>}
       </Map>
       <Modal>
         <Info>내가 선물할 장소의 주소는 여기에요!</Info>
         <Address>
          {clickedAddress && <p>{clickedAddress}</p>}
         </Address>
-        <Button text="이 위치로 정할게요" />
+        <Button2 onClick={handleSubmit} text="이 위치로 정할게요" />
       </Modal>
     </>
   );
-}
-export default Gift0;
+}export default Gift0;
