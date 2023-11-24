@@ -1,112 +1,199 @@
-import React,{useState,useEffect} from "react";
-import { Map,MapMarker } from "react-kakao-maps-sdk";
+import React, { useState, useEffect } from "react";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import useKakaoLoader from "../components/useKakaoLoader";
 import PlacesData from "../db/places.json";
 import GiftBtn from "../components/GiftBtn";
 import PinNum from "../components/PinNum";
 
-
-
-
 function Main() {
-    useKakaoLoader()
-    useKakaoLoader()
-    const useMarkerClick = () => {
-        const [selectedMarker, setSelectedMarker] = useState(null);
-        const [places, setPlaces] = useState(PlacesData.places);
-      
-        useEffect(() => {
-          const markers = places.map((place) => {
-            const marker = new window.kakao.maps.Marker({
-              position: new window.kakao.maps.LatLng(place.latitude, place.longitude),
-            });
-      
-            const handleClick = () => {
-              if (selectedMarker) {
-                selectedMarker.setImage(new window.kakao.maps.MarkerImage(
-                  '../asset/Icon/marker.png',
-                  new window.kakao.maps.Size("30px", "30px")
-                ));
-              }
-      
-              marker.setImage(new window.kakao.maps.MarkerImage(
-                '../asset/Icon/giftMarker.png',
-                new window.kakao.maps.Size("30px", "30px")
-              ));
-      
-              setSelectedMarker(marker);
-            };
-      
-            window.kakao.maps.event.addListener(marker, 'click', handleClick);
-      
-            return marker;
+  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [places, setPlaces] = useState(PlacesData.places);
+
+  useKakaoLoader();
+
+  useEffect(() => {
+    if (window.kakao && window.kakao.maps) {
+      places.forEach((place) => {
+        const marker = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(
+            place.latitude,
+            place.longitude
+          ),
+          clickable: true,
         });
-    
-        markers.forEach((marker) => {
-          marker.setMap(window.map);
-        });
-    
-        return () => {
-          markers.forEach((marker) => {
-            window.kakao.maps.event.removeListener(marker, 'click');
-          });
+
+        const handleClick = () => {
+          if (selectedMarker) {
+            selectedMarker.setImage(
+              new window.kakao.maps.MarkerImage(
+                process.env.PUBLIC_URL + "/img/basicMarker.svg",
+                new window.kakao.maps.Size("64px", "69px"),
+                {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  },
+                }
+              )
+            );
+          }
+
+          if (selectedMarker === marker) {
+            setSelectedMarker(null);
+          } else {
+            marker.setImage(
+              new window.kakao.maps.MarkerImage(
+                process.env.PUBLIC_URL + "/img/giftMarker.svg",
+                new window.kakao.maps.Size("64px", "69px"),
+                {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  },
+                }
+              )
+            );
+            setSelectedMarker(marker);
+          }
         };
-      }, [places, selectedMarker]);
-    
-      return selectedMarker;
-    };
-    const markerImage = {
-        src: process.env.PUBLIC_URL + 'img/basicMarker.svg',
-        size: {
-          width: 64,
-          height: 69,
-        },
-        options: {
-          offset: {
-            x: 27,
-            y: 69,
-          },
-        },
-      };
-    const giftMarkerImage={
-        src: process.env.PUBLIC_URL + 'img/giftMarker.svg',
-        size: {
-          width: 64,
-          height: 69,
-        },
-        options: {
-          offset: {
-            x: 27,
-            y: 69,
-          },
-        },
+
+        window.kakao.maps.event.addListener(marker, "click", handleClick);
+
+        marker.setMap(window.map);
+
+        return () => {
+          window.kakao.maps.event.removeListener(marker, "click");
+          marker.setMap(null);
+        };
+      });
     }
-       
+  }, [places, selectedMarker]);
 
-    
-    
-    return (
-        <>
-        
-         <Map
-            center={{ lat: 33.5563, lng: 126.79581 }}
-            style={{ width: "100%", height: "100vh" }}>
-        
-        {PlacesData.places.map(res=>{
-            <MapMarker onClick={useMarkerClick}
+  useEffect(() => {
+    if (window.kakao && window.kakao.maps) {
+      places.forEach((place) => {
+        const marker = new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(
+            place.latitude,
+            place.longitude
+          ),
+          clickable: true,
+        });
+
+        const handleClick = () => {
+          if (selectedMarker) {
+            selectedMarker.setImage(
+              new window.kakao.maps.MarkerImage(
+                process.env.PUBLIC_URL + "/img/basicMarker.svg",
+                new window.kakao.maps.Size("64px", "69px"),
+                {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  },
+                }
+              )
+            );
+          }
+
+          // Check if the clicked marker is the same as the selected marker
+          const isSameMarker =
+            selectedMarker &&
+            Math.abs(
+              selectedMarker.getPosition().getLat() -
+                marker.getPosition().getLat()
+            ) < 0.000001 &&
+            Math.abs(
+              selectedMarker.getPosition().getLng() -
+                marker.getPosition().getLng()
+            ) < 0.000001;
+
+          if (selectedMarker && isSameMarker) {
+            setSelectedMarker(null);
+          } else {
+            marker.setImage(
+              new window.kakao.maps.MarkerImage(
+                process.env.PUBLIC_URL + "/img/giftMarker.svg",
+                new window.kakao.maps.Size("64px", "69px"),
+                {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  },
+                }
+              )
+            );
+            setSelectedMarker(marker);
+          }
+        };
+
+        window.kakao.maps.event.addListener(marker, "click", handleClick);
+
+        marker.setMap(window.map);
+
+        return () => {
+          window.kakao.maps.event.removeListener(marker, "click");
+          marker.setMap(null);
+        };
+      });
+    }
+  }, [places, selectedMarker]);
+
+  return (
+    <>
+      <Map
+        center={{ lat: 37.5982639, lng: 126.8648429 }}
+        style={{ width: "100%", height: "100vh" }}
+      >
+        {places.map((place) => (
+          <MapMarker
+            key={place.placeId}
             position={{
-            lat:res.latitude,
-            lng:res.longitude}}
-            // image={markerImage}
-            />
-        })}
-        <PinNum/>
-        <GiftBtn/>
-        </Map>
-        
-        </>
-
-    );
+              lat: place.latitude,
+              lng: place.longitude,
+            }}
+            image={
+              selectedMarker &&
+              selectedMarker
+                .getPosition()
+                .equals(
+                  new window.kakao.maps.LatLng(place.latitude, place.longitude)
+                )
+                ? {
+                    src: process.env.PUBLIC_URL + "/img/giftMarker.svg",
+                    size: {
+                      width: 64,
+                      height: 69,
+                    },
+                    options: {
+                      offset: {
+                        x: 27,
+                        y: 69,
+                      },
+                    },
+                  }
+                : {
+                    src: process.env.PUBLIC_URL + "/img/basicMarker.svg",
+                    size: {
+                      width: 64,
+                      height: 69,
+                    },
+                    options: {
+                      offset: {
+                        x: 27,
+                        y: 69,
+                      },
+                    },
+                  }
+            }
+            onClick={() => console.log(`Marker Clicked: ${place.placeName}`)}
+          />
+        ))}
+        <PinNum />
+        <GiftBtn />
+      </Map>
+    </>
+  );
 }
 
 export default Main;

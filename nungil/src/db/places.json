@@ -1,16 +1,23 @@
 {
     "places":[
        {"placeId" : 1,
-       "latitude" : 92.21,
-       "longitude" : 37.51,
+       "latitude" : 37.5982639,
+       "longitude" : 126.8648429,
        "placeName" : "대나무 숲",
        "placeProvider" : "유승한"},
 
        {"placeId" : 2,
-       "latitude" : 92.31,
-       "longitude" : 37.55,
+       "latitude" : 37.6648429,
+       "longitude" : 127.0581,
        "placeName" : "초코나무 숲",
-       "placeProvider" : "이명진"}
+       "placeProvider" : "이명진"},
+
+       {"placeId" : 3,
+       "latitude" : 37.5648429,
+       "longitude" : 127.0581,
+       "placeName" : "바나나 숲",
+       "placeProvider" : "조준영"
+       }
     ]
 
 }
