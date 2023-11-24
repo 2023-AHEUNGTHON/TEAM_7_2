@@ -4,6 +4,7 @@ import CreateMap from "./pages/CreateMap";
 import Gift from "./pages/Gift";
 import Gift1 from "./pages/Gift1";
 import Gift2 from "./pages/Gift2";
+import Gift22 from "./pages/Gift22";
 import Gift3 from "./pages/Gift3";
 import Main from "./pages/Main";
 import CreateMap1 from './pages/CreateMap1';
@@ -39,6 +40,7 @@ function App() {
           <Route path="/gift" element={<Gift />} />
           <Route path="/gift1" element={<Gift1 />} />
           <Route path="/gift2" element={<Gift2 />} />
+          <Route path="/gift22" element={<Gift22 />} />
           <Route path="/gift3" element={<Gift3 />} />
           <Route path="/main0" element={<Main0 />} /> 
           <Route path="/readtext" element={<ReadText />} />

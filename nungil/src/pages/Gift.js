@@ -38,10 +38,11 @@ const Div=styled.div`
 
 function Gift() {
     const [placeName,setPlaceName]=useState("");
-    const navigate=useNavigate();
     const location=useLocation();
-    const latitud=location.state.lat;
-    console.log(latitud);
+    const navigate=useNavigate();
+    // const location=useLocation();
+    // const latitud=location.state.lat;
+  
     const ChangeHandler = (event) => {
         const newName = event.target.value
         console.log(newName);
@@ -59,8 +60,8 @@ function Gift() {
             state:{
                 PN: placeName,
                 ADD:location.state.Address,
-                Lat:location.state.lat,
-                Lng:location.state.lng
+                Lat:location.state.Latitude,
+                Lng:location.state.Longitude
             }
           });
         }

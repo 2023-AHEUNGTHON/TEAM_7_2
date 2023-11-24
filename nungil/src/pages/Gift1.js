@@ -53,7 +53,9 @@ function Gift1() {
             state:{
                 pn : placeName,
                 lt : letter,
-                add:location.state.ADD
+                add:location.state.ADD,
+                lat:location.state.Lat,
+                lng:location.state.Lng
             }
           });
         };

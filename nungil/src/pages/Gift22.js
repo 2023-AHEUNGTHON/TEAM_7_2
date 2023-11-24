@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import Header from "../components/Header";
@@ -39,6 +39,8 @@ function Gift22() {
     const Ans=location.state.ANS;
     const Quiz=location.state.QUIZ;
     const Addr=location.state.ADD;
+    const Lati=location.state.LAT;
+    const Long=location.state.LNG;
 
     const [userName,setName]=useState("");
 
@@ -59,28 +61,30 @@ function Gift22() {
       event.preventDefault();
     } else {
         //통신
+        console.log("통신 주석처리")
         //createMap에서 선물추가 누를때 거기서 userId 받아와야함.
         // axios({
         //     method:"POST",
         //     url: `https://api.nungil.shop/api/place/${userId}`,
         //     data:{
         //         "placeName" : Pn,
-	    //         // "placeProvider" : "유승한",
+	    //         // "placeProvider" : userName,
 	    //         "placeDescription" :Lt,
         //         "address":Addr,
-	    //         // "latitude" : 37.4990004,
-	    //         // "longitude" : 127.0326401,
+	    //         // "latitude" : Lati,
+	    //         // "longitude" : Long,
 	    //         "quiz" : Quiz,
 	    //         "quizAnswer" : Ans
         //     }
         // }).then((res)=>{
         //     console.log("통신성공")
         //     console.log(res);
+        //      <Link to='/gift3'/>
         // }).catch(error=>{
         //     console.log(error);
         //     throw new Error(error);
         // });
-        console.log("통신 주석처리")
+        
     }
   };
 
