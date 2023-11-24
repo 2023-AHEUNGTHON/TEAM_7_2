@@ -4,6 +4,7 @@ import useKakaoLoader from "../components/useKakaoLoader";
 import PlacesData from "../db/places.json";
 import GiftBtn from "../components/GiftBtn";
 import PinNum from "../components/PinNum";
+import Infor from "../components/Infor";
 
 function Main() {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -145,50 +146,7 @@ function Main() {
         center={{ lat: 37.5982639, lng: 126.8648429 }}
         style={{ width: "100%", height: "100vh" }}
       >
-        {places.map((place) => (
-          <MapMarker
-            key={place.placeId}
-            position={{
-              lat: place.latitude,
-              lng: place.longitude,
-            }}
-            image={
-              selectedMarker &&
-              selectedMarker
-                .getPosition()
-                .equals(
-                  new window.kakao.maps.LatLng(place.latitude, place.longitude)
-                )
-                ? {
-                    src: process.env.PUBLIC_URL + "/img/giftMarker.svg",
-                    size: {
-                      width: 64,
-                      height: 69,
-                    },
-                    options: {
-                      offset: {
-                        x: 27,
-                        y: 69,
-                      },
-                    },
-                  }
-                : {
-                    src: process.env.PUBLIC_URL + "/img/basicMarker.svg",
-                    size: {
-                      width: 64,
-                      height: 69,
-                    },
-                    options: {
-                      offset: {
-                        x: 27,
-                        y: 69,
-                      },
-                    },
-                  }
-            }
-            onClick={() => console.log(`Marker Clicked: ${place.placeName}`)}
-          />
-        ))}
+        <Infor placeName="음" address="음"/>
         <PinNum />
         <GiftBtn />
       </Map>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-
+import { useState } from "react";
+import axios from "axios";
 const Div=styled.div`
 position:absolute;
 bottom:100px;
@@ -18,10 +19,20 @@ const Number=styled.div`
     right:11px;
 `;
 function PinNum(){
+    const [num,setNum]=useState();
+    function ChangeHandler(){
+        axios.get(`https://api.nungil.shop/api/user/${1}/places/count`
+        ).then((res)=>{
+        console.log(res);
+        setNum(res);
+        }).catch((Error)=>{
+        console.log(Error);
+        })
+    }
     return(
         <Div>
         <img src={`${process.env.PUBLIC_URL}/img/Num.svg`} />
-        <Number>n 개</Number>
+        <Number onChange={ChangeHandler}>{num}개</Number>
         </Div>
     )
 }export default PinNum;

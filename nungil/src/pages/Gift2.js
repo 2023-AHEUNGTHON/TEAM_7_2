@@ -63,7 +63,9 @@ function Gift2() {
                 lt:LT,
                 ANS:ans,
                 QUIZ:quiz,
-                ADD:location.state.add
+                ADD:location.state.add,
+                LAT:location.state.lat,
+                LNG:location.state.lng
             }
           });
         
