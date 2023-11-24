@@ -74,18 +74,20 @@ function CreateMap1() {
   const location = useLocation();
   const userName = new URLSearchParams(location.search).get("userName");
   const navigate = useNavigate();
+  const [temporaryLatitude, setTemporaryLatitude] = useState(37.955);
+  const [temporaryLongitude, setTemporaryLongitude] = useState(126.961);
 
   const { location: currentLocation, error: currentError } =
     useCurrentLocation(geolocationOptions);
 
   useEffect(() => {
     // 오류가 발생했을 때 처리
-    if (currentError) {
-      console.error("Error occurred:", currentError);
-    }
-
-    // currentLocation이 정의되었을 때만 값을 읽음, 여기 위도 경도 post 보내면 될듯
-    if (currentLocation) {
+    if (currentError && currentError.code === 1) {
+      console.log("User denied Geolocation");
+      // 위치 정보를 받아오지 못한 경우에 임시 데이터 설정
+      setTemporaryLatitude(37.955);
+      setTemporaryLongitude(126.961);
+    } else if (currentLocation) {
       console.log("Latitude(위도):", currentLocation.latitude);
       console.log("Longitude(경도):", currentLocation.longitude);
     }
@@ -97,15 +99,25 @@ function CreateMap1() {
 
   const isButtonDisabled = place.length === 0; // 이름이 비어있으면 버튼 비활성화
 
+  console.log(temporaryLatitude, temporaryLongitude); // 임시 위치 데이터
+
   // 버튼 클릭 시 동작
   const handleSubmit = (event) => {
     if (isButtonDisabled) {
       event.preventDefault();
     } else {
+      // 위치 정보를 받아오지 못한 경우에 임시 데이터 설정
+      const selectedLatitude = currentLocation?.latitude || temporaryLatitude;
+      const selectedLongitude =
+        currentLocation?.longitude || temporaryLongitude;
+
+      console.log("Selected Latitude:", selectedLatitude);
+      console.log("Selected Longitude:", selectedLongitude);
+
       axios
-        .post("https://api.nungil.shop/api/user/register", {
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
+        .post('https://api.nungil.shop/api/user/register', {
+          latitude: selectedLatitude,
+          longitude: selectedLongitude,
           placeTheme: place,
           userName: userName,
         })
@@ -114,12 +126,29 @@ function CreateMap1() {
           navigate(`/createmap2?userId=${encodeURIComponent(res)}`);
         })
         .catch((err) => {
-          console.log("통신 에러", err);
+          // 에러 메시지 출력
+          if (err.response) {
+            // 서버가 응답한 경우
+            console.error("에러 응답:", err.response.data);
+            console.error("에러 상태 코드:", err.response.status);
+            console.error("에러 헤더:", err.response.headers);
+          } else if (err.request) {
+            // 서버에 요청이 전송되지 않은 경우
+            console.error("요청이 전송되지 않음:", err.request);
+          } else {
+            // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생한 경우
+            console.error("요청 설정 중 오류:", err.message);
+          }
+          console.error("에러 설정:", err.config);
         });
 
-      console.log(userName, place); // 값 확인용 데이터
-      
+      console.log(userName); // 값 확인용 데이터
+      console.log(place);
+      console.log(selectedLatitude, selectedLongitude); // 실제 위치 데이터
+      console.log(temporaryLatitude, temporaryLongitude); // 임시 위치 데이터
+
       // 데이터 이동하는지 보기 위해 임시로 1 대입, res로 수정하면 될듯
+      navigate(`/createmap2?userId=${encodeURIComponent(4)}`);
       // navigate("/createmap2"); // router에서 제공하는 navigate Hook (페이지 이동)
     }
   };
