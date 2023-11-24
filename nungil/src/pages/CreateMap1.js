@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import useCurrentLocation from "../hooks/useCurrentLocation";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Backspace from "../components/Backspace";
@@ -102,9 +102,25 @@ function CreateMap1() {
     if (isButtonDisabled) {
       event.preventDefault();
     } else {
-      console.log(userName, place); // 값 확인용 데이터 (이름, 장소),여기도 post
+      axios
+        .post("https://api.nungil.shop/api/user/register", {
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
+          placeTheme: place,
+          userName: userName,
+        })
+        .then((res) => {
+          console.log("통신 성공", res);
+          navigate(`/createmap2?userId=${encodeURIComponent(res)}`);
+        })
+        .catch((err) => {
+          console.log("통신 에러", err);
+        });
 
-      navigate("/createmap2"); // router에서 제공하는 navigate Hook (페이지 이동)
+      console.log(userName, place); // 값 확인용 데이터
+      
+      // 데이터 이동하는지 보기 위해 임시로 1 대입, res로 수정하면 될듯
+      // navigate("/createmap2"); // router에서 제공하는 navigate Hook (페이지 이동)
     }
   };
 
