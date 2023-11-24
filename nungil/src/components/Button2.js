@@ -9,7 +9,11 @@ border-radius: 10px;
 gap: 10px;
 border: none;
 color: #ffffff;
+font-size:14px;
+font-weight:700;
+
 background-color: #FA7268;
+
 
 
   &:hover{
