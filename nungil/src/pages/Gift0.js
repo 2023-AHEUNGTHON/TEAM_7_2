@@ -48,6 +48,8 @@ const markerImage = {
 function Gift0() {
   const navigate=useNavigate();
   const [position, setPosition] = useState();
+  // const [latitude,setLat]=useState();
+  // const [longitude,setLng]=useState();
   const [clickedAddress, setClickedAddress] = useState("");
   useKakaoLoader();
   
@@ -79,11 +81,11 @@ function Gift0() {
 
   const handleSubmit = () => {
     console.log("클릭");
+
     navigate('/gift',{
         state:{
             Address:clickedAddress,
-            lat:mouseEvent.latLng.getLat(),
-            lng:mouseEvent.latLng.getLng()
+            
         }
   });
 }

@@ -60,27 +60,27 @@ function Gift22() {
     } else {
         //통신
         //createMap에서 선물추가 누를때 거기서 userId 받아와야함.
-        axios({
-            method:"POST",
-            url: `https://api.nungil.shop/api/place/${userId}`,
-            data:{
-                "placeName" : Pn,
-	            // "placeProvider" : "유승한",
-	            "placeDescription" :Lt,
-                "address":Addr,
-	            // "latitude" : 37.4990004,
-	            // "longitude" : 127.0326401,
-	            "quiz" : Quiz,
-	            "quizAnswer" : Ans
-            }
-        }).then((res)=>{
-            console.log("통신성공")
-            console.log(res);
-        }).catch(error=>{
-            console.log(error);
-            throw new Error(error);
-        });
-      
+        // axios({
+        //     method:"POST",
+        //     url: `https://api.nungil.shop/api/place/${userId}`,
+        //     data:{
+        //         "placeName" : Pn,
+	    //         // "placeProvider" : "유승한",
+	    //         "placeDescription" :Lt,
+        //         "address":Addr,
+	    //         // "latitude" : 37.4990004,
+	    //         // "longitude" : 127.0326401,
+	    //         "quiz" : Quiz,
+	    //         "quizAnswer" : Ans
+        //     }
+        // }).then((res)=>{
+        //     console.log("통신성공")
+        //     console.log(res);
+        // }).catch(error=>{
+        //     console.log(error);
+        //     throw new Error(error);
+        // });
+        console.log("통신 주석처리")
     }
   };
 
