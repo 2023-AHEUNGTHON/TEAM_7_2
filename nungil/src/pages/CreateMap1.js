@@ -114,8 +114,27 @@ function CreateMap1() {
       console.log("Selected Latitude:", selectedLatitude);
       console.log("Selected Longitude:", selectedLongitude);
 
-      axios
-        .post('https://api.nungil.shop/api/user/register', {
+      axios({
+        method: "POST",
+        url: "https://api.nungil.shop/api/user/register",
+        data: {
+          latitude: selectedLatitude,
+          longitude: selectedLongitude,
+          placeTheme: place,
+          userName: userName,
+        },
+      })
+        .then((res) => {
+          console.log("통신 성공", res);
+          navigate(`/createmap2?userId=${encodeURIComponent(res)}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          throw new Error(error);
+        });
+
+   /*   axios
+        .post("https://api.nungil.shop/api/user/register", {
           latitude: selectedLatitude,
           longitude: selectedLongitude,
           placeTheme: place,
@@ -141,7 +160,7 @@ function CreateMap1() {
           }
           console.error("에러 설정:", err.config);
         });
-
+*/
       console.log(userName); // 값 확인용 데이터
       console.log(place);
       console.log(selectedLatitude, selectedLongitude); // 실제 위치 데이터
@@ -183,6 +202,7 @@ function CreateMap1() {
         <Button2 text="다음으로" onClick={handleSubmit} />
         {/* </Link> */}
       </CenterBox>
+      /
     </>
   );
 }
