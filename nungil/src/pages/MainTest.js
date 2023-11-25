@@ -110,4 +110,8 @@ function MainTest() {
   );
 }export default MainTest;
 
+<<<<<<<<< Temporary merge branch 1
 export default MainTest;
+=========
+export default MainTest;
+>>>>>>>>> Temporary merge branch 2
