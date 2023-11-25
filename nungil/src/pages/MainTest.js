@@ -49,8 +49,8 @@ function MainTest() {
   const [placeInfo, setPlaceInfo] = useState({ name: "", address: "" });
   const [userPositions, setUserPositions] = useState([]);
   const [currentPosition, setCurrentPosition] = useState({
-    lat: 33.450701,
-    lng: 126.570667,
+    lat: 37.497000,
+    lng: 126.957966,
   });
 
   useEffect(() => {
@@ -123,6 +123,7 @@ function MainTest() {
     setPlaceInfo({
       name: userPositions[index].name,
       address: userPositions[index].address,
+      placeId :userPositions[index].placeId
     });
   };
 
@@ -139,11 +140,9 @@ function MainTest() {
       <Infor
         placeName={placeInfo.name}
         address={placeInfo.address}
+        placeId={placeInfo.placeId}
       />
-      <Div>
-        <img src={`${process.env.PUBLIC_URL}/img/Num.svg`} />
-        <Number onChange={PinNum}>{num}개</Number>
-        </Div>
+      
       <GiftBtn />
     </Map>
   );

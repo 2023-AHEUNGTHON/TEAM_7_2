@@ -63,8 +63,8 @@ function Gift22() {
         //통신
         //createMap에서 선물추가 누를때 거기서 userId 받아와야함.
          axios({
-             method:"GET",
-             url: `https://api.nungil.shop/api/user/${User}/places`,
+             method:"POST",
+             url: `https://api.nungil.shop/api/place/register`,
              data:{
                  "placeName" : Pn,
 	               "placeProvider" : userName,
@@ -73,7 +73,8 @@ function Gift22() {
 	               "latitude" : Lati,
 	               "longitude" : Long,
 	               "quiz" : Quiz,
-	               "quizAnswer" : Ans
+	               "quizAnswer" : Ans,
+                 "userId":User
              }
          }).then((res)=>{
              console.log("통신성공")
