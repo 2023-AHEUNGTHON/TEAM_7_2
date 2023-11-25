@@ -22,8 +22,6 @@ const Input = styled.input`
   font-size: 14px;
   font-color: #909090;
   border: 1px solid #f1f1f1;
-  background: linear-gradient(0deg, #f1f1f1, #f1f1f1);
-    linear-gradient(0deg, #fafafa, #fafafa);
 `;
 
 const Div = styled.div`
