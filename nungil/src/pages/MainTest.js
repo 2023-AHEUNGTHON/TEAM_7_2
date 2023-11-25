@@ -108,6 +108,6 @@ function MainTest() {
       <GiftBtn />
     </Map>
   );
-}
+}export default MainTest;
 
 export default MainTest;
