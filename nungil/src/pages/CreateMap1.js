@@ -125,8 +125,8 @@ function CreateMap1() {
         },
       })
         .then((res) => {
-          console.log("통신 성공", res);
-          navigate(`/createmap2?userId=${encodeURIComponent(res)}`);
+          console.log("통신 성공", res.data.userId);
+          navigate(`/createmap2?userId=${encodeURIComponent(res.data.userId)}`);
         })
         .catch((error) => {
           console.log(error);
