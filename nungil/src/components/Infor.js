@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 //클릭 x 
@@ -55,6 +56,15 @@ const ImgDiv2=styled.div`
 `;
 //props로 클릭된 props 받아오기
 function Infor(props){
+    const navigate=useNavigate();
+    const handleSubmit = () => {
+        navigate('/readtext',{
+            state:{
+                placeId:props.placeId
+            }
+          });
+        
+};
     
     return(
         <>
@@ -65,7 +75,7 @@ function Infor(props){
             <Loc>{props.placeName}</Loc>
             <Add>{props.address}</Add>
             <Link to='/gift0'>
-            <ImgDiv>
+            <ImgDiv onClick={handleSubmit}>
             <img src={`${process.env.PUBLIC_URL}/img/letter.svg`}/>
             </ImgDiv>
             </Link>

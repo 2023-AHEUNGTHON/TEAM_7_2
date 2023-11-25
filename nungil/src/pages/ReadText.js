@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import Main from "./Main";
+import axios from "axios";
+import { useState } from "react";
+import {useLocation} from "react-router-dom";
 import ModalBg from "../components/ModalBg";
 import DialogBox from "../assets/modal/dialogbox.png";
 
@@ -41,24 +43,34 @@ const Name = styled.p`
   color: #9B9B9B;
 `
 function ReadText() {
+  const location=useLocation();
+  const placeId=location.state.placeId;
+
+  const [letter,setLetter]=useState();
+  const [name,setName]=useState();
+  axios.get(`https://api.nungil.shop/api/user/${placeId}/place`)
+    .then((res)=>{
+      console.log("통신성공")
+      console.log(res.data);
+      setLetter(res.data.placeDescription);
+      setName(res.data.Provider);
+  }).catch(error=>{
+      console.log("통신실패");
+      console.log(error);
+      throw new Error(error);
+  });
+
   return (
     <>
       <ModalBg />
       <Modal>
         <ModalContent>
-            <Text>이제 여기에 메세지가 작성됩니다.
-                하지만
-                줄을 바꿔도 나타나지 않아요
-                이것 까지 할 수 있을까요?
-                어떤 말을 작성할지 모르겠지만, 줄 바꿈을 하겠죠..?
-                글은 꽤 많이 작성되네요.
-                일단 임시로 Text 높이를 설정 해둔 거라서 변경해도 돼요.
-                조금 더 쭉쭉 가서 여기가 제가 생각한 마지막 줄이에요
+            <Text>{letter}
             </Text>
-            <Name>슝슝이</Name>
+            <Name>{name}</Name>
         </ModalContent>
       </Modal>
-      <Main />
+     {/*백그라운드 사진 */}
     </>
   );
 }
