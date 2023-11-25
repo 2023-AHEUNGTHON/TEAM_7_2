@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useLocation,useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ModalBg from "../components/ModalBg";
 
 import Explan from "../assets/modal/explan.png";
@@ -52,7 +52,7 @@ const LaterBtn = styled.button`
   border-radius: 10px;
   gap: 10px;
   border: none;
-  color: #9B9B9B;
+  color: #9b9b9b;
   font-weight: 600;
   background-color: transparent;
 
@@ -62,30 +62,29 @@ const LaterBtn = styled.button`
 `;
 
 function Main0() {
-  const location=useLocation();
-  const navigate=useNavigate();
-
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const params = new URLSearchParams(location.search);
 
-  let userId = params.get("userId");
+  const userId = params.get("userId");
 
-  console.log("params.get('name') >>> ", userId);
+  console.log(userId);
 
   const handleSubmit = () => {
-    navigate('/gift',{
-        state:{
-          ui:userId
-        }
-  });
-}
+    navigate("/gift0", {
+      state: {
+        user: userId,
+      },
+    });
+  };
   const handleSubmit2 = () => {
-    navigate('/MainTest',{
-        state:{
-          ui:userId
-        }
-  });
-}
+    navigate("/maintest", {
+      state: {
+        user: userId,
+      },
+    });
+  };
 
   return (
     <>
@@ -110,7 +109,7 @@ function Main0() {
           <LaterBtn onClick={handleSubmit2}> 다음에 할게요</LaterBtn>
         </ModalContent>
       </Modal>
-      <MainTest />
+  
     </>
   );
 }
