@@ -14,10 +14,10 @@ const Img = styled.img`
 
 const NavigationMessage = styled.p`
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #262626;
-  padding-top: 0.5rem;
+  margin-bottom: 0.5rem;
 `
 
 const Button = styled.button`
@@ -44,6 +44,4 @@ function SaveLocation() {
       <Select></Select> */}
     </>
   );
-}
-
-export default SaveLocation;
+}export default SaveLocation;
