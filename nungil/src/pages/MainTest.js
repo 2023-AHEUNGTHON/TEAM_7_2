@@ -1,76 +1,70 @@
-import React, { useState,useEffect} from "react";
-import { Map, MapMarker} from "react-kakao-maps-sdk";
+import React, { useState, useEffect } from "react";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import axios from "axios";
 import useKakaoLoader from "../components/useKakaoLoader";
-import PlacesData from "../db/places.json";
 import GiftBtn from "../components/GiftBtn";
 import PinNum from "../components/PinNum";
 import Infor from "../components/Infor";
-
-
 
 function MainTest() {
   useKakaoLoader();
 
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [placeInfo, setPlaceInfo] = useState({ name: "", address: "" });
+  const [userPositions, setUserPositions] = useState([]);
+  const [currentPosition, setCurrentPosition] = useState({
+    lat: 33.450701,
+    lng: 126.570667,
+  });
 
-  //현재위치 
-  const [state, setState] = useState({
-    center: {
-      lat: 33.450701,
-      lng: 126.570667,
-    },
-    errMsg: null,
-    isLoading: true,
-  })
   useEffect(() => {
+    // 현재 위치 가져오기
     if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setState((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude, // 위도
-              lng: position.coords.longitude, // 경도
-            },
-            isLoading: false,
-          }))
+          setCurrentPosition({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
         },
         (err) => {
-          setState((prev) => ({
-            ...prev,
-            errMsg: err.message,
-            isLoading: false,
-          }))
+          console.error("Error getting current position:", err.message);
         }
-      )
+      );
     } else {
-      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-      setState((prev) => ({
-        ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
-        isLoading: false,
-      }))
+      console.error("Geolocation not supported.");
     }
-  }, [])
 
+    // Axios로 데이터 가져오기
+    axios({
+      method: "GET",
+      url: `https://api.nungil.shop/api/user/${1}/places`,
+    })
+      .then((res) => {
+        console.log("통신 성공");
+        console.log(res.data); // 응답 데이터 확인
 
+        const positions = res.data.map((item) => ({
+          lat: item.latitude,
+          lng: item.longitude,
+          name: item.placeName,
+          address: item.address,
+          placeId: item.placeId,
+        }));
 
-  // 위치 데이터를 마커 위치로 변환
-  const positions = PlacesData.places.map((place) => ({
-    lat: place.latitude,
-    lng: place.longitude,
-  }));
-
+        setUserPositions(positions);
+      })
+      .catch((error) => {
+        console.error("Error fetching user places:", error);
+      });
+  }, []); // 이 부분에서 두 번째 파라미터를 빈 배열로 설정
 
   const MarkerContainer = ({ position, onClick, isSelected }) => {
-    // 선택 여부에 따라 마커 이미지 정의
     const markerImage = {
       src: isSelected
         ? process.env.PUBLIC_URL + "/img/giftMarker.svg"
         : process.env.PUBLIC_URL + "/img/basicMarker.svg",
-      size: isSelected? {width: 64,height: 69}:{width:30,height:35},
+      size: isSelected ? { width: 64, height: 69 } : { width: 30, height: 35 },
       options: {
         offset: {
           x: 27,
@@ -80,26 +74,40 @@ function MainTest() {
     };
 
     return (
-      <MapMarker position={position} onClick={onClick} image={markerImage}  />
+      <MapMarker
+        position={position}
+        onClick={onClick}
+        image={markerImage}
+      />
     );
   };
 
+  const onClickHandler = (index) => {
+    setSelectedMarker(index);
+    setPlaceInfo({
+      name: userPositions[index].name,
+      address: userPositions[index].address,
+    });
+  };
+
   return (
-    <Map
-      center={state.center}
-      style={{ width: "100%", height: "100vh" }}
-    >
-      {positions.map((position, index) => (
+    <Map center={currentPosition} style={{ width: "100%", height: "100vh" }}>
+      {userPositions.map((position, index) => (
         <MarkerContainer
-          key={`MarkerContainer-${position.lat}-${position.lng}`}
+          key={`MarkerContainer-${position.placeId}`}
           position={position}
-          onClick={() => setSelectedMarker(index)}
+          onClick={() => onClickHandler(index)}
           isSelected={selectedMarker === index}
         />
       ))}
-      <Infor/>
+      <Infor
+        placeName={placeInfo.name}
+        address={placeInfo.address}
+      />
       <PinNum />
       <GiftBtn />
     </Map>
   );
-}export default MainTest;
+}
+
+export default MainTest;
