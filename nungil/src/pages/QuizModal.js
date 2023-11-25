@@ -8,7 +8,7 @@ import QuizBox from "../assets/modal/quizbox.png";
 const Modal = styled.div`
   position: fixed;
   z-index: 3;
-  top: 50vh;
+  top: 73vh;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
@@ -25,15 +25,20 @@ const Header = styled.p`
   font-size: 1.25rem;
   font-weight: 700;
   color: #262626;
+  text-align: start;
+  margin-left: 8%;
 `;
 
 const ImgBox = styled.div`
-  width: 12.8125rem;
   height: 7rem;
+  margin-top: 5rem;
+  margin-bottom: 3rem;
 `;
 
 const FlexBox = styled.div`
   display: flex;
+  margin-left: 8%;
+  margin-bottom: 0.875rem;
 `;
 
 const Red = styled.p`
@@ -52,6 +57,8 @@ const List = styled.li`
   font-size: 0.875rem;
   font-weight: 500;
   color: #505050;
+  text-align: start;
+  margin-bottom: 0.5rem;
 `;
 
 const LaterBtn = styled.button`
@@ -60,6 +67,8 @@ const LaterBtn = styled.button`
   font-size: 0.8125rem;
   font-weight: 500;
   color: #c5c5c5;
+  margin-top: 20px;
+  margin-bottom: 15px;
 `;
 
 function QuizModal() {

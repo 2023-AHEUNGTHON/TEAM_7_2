@@ -7,13 +7,14 @@ import Gift2 from "./pages/Gift2";
 import Gift22 from "./pages/Gift22";
 import Gift3 from "./pages/Gift3";
 import Main from "./pages/Main";
-import CreateMap1 from './pages/CreateMap1';
+import CreateMap1 from "./pages/CreateMap1";
 import CreateMap2 from "./pages/CreateMap2";
 import Gift0 from "./pages/Gift0";
 import Main0 from "./pages/Main0";
 import ReadText from "./pages/ReadText";
-import QuizModal from "./pages/QuizModal"; 
+import QuizModal from "./pages/QuizModal";
 import QuizAnswer from "./pages/QuizAnswer";
+import Basic from "./pages/Basic";
 
 import MainTest from "./pages/MainTest";
 
@@ -42,13 +43,14 @@ function App() {
           <Route path="/gift2" element={<Gift2 />} />
           <Route path="/gift22" element={<Gift22 />} />
           <Route path="/gift3" element={<Gift3 />} />
-          <Route path="main0" element={<Main0 />} /> 
+          <Route path="main0" element={<Main0 />} />
           <Route path="/readtext" element={<ReadText />} />
 
           <Route path="/quizmodal" element={<QuizModal />} />
           <Route path="/quizanswer" element={<QuizAnswer />} />
-          
-          <Route path="/maintest" element={<MainTest /> } />
+
+          <Route path="/basic" element={<Basic />} />
+          <Route path="/maintest" element={<MainTest />} />
         </Routes>
       </BrowserRouter>
     </Setting>
