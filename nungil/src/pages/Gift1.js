@@ -55,7 +55,8 @@ function Gift1() {
                 lt : letter,
                 add:location.state.ADD,
                 lat:location.state.Lat,
-                lng:location.state.Lng
+                lng:location.state.Lng,
+                ui:location.state.Ui
             }
           });
         };

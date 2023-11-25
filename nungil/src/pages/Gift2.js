@@ -65,7 +65,8 @@ function Gift2() {
                 QUIZ:quiz,
                 ADD:location.state.add,
                 LAT:location.state.lat,
-                LNG:location.state.lng
+                LNG:location.state.lng,
+                UI:location.state.ui
             }
           });
         

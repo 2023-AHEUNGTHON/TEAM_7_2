@@ -41,7 +41,7 @@ function Gift22() {
     const Addr=location.state.ADD;
     const Lati=location.state.LAT;
     const Long=location.state.LNG;
-
+    const User=location.state.UI;
     const [userName,setName]=useState("");
 
     
@@ -61,29 +61,29 @@ function Gift22() {
       event.preventDefault();
     } else {
         //통신
-        console.log("통신 주석처리")
         //createMap에서 선물추가 누를때 거기서 userId 받아와야함.
-        // axios({
-        //     method:"POST",
-        //     url: `https://api.nungil.shop/api/place/${userId}`,
-        //     data:{
-        //         "placeName" : Pn,
-	    //         // "placeProvider" : userName,
-	    //         "placeDescription" :Lt,
-        //         "address":Addr,
-	    //         // "latitude" : Lati,
-	    //         // "longitude" : Long,
-	    //         "quiz" : Quiz,
-	    //         "quizAnswer" : Ans
-        //     }
-        // }).then((res)=>{
-        //     console.log("통신성공")
-        //     console.log(res);
-        //      <Link to='/gift3'/>
-        // }).catch(error=>{
-        //     console.log(error);
-        //     throw new Error(error);
-        // });
+         axios({
+             method:"GET",
+             url: `https://api.nungil.shop/api/user/${User}/places`,
+             data:{
+                 "placeName" : Pn,
+	               "placeProvider" : userName,
+	               "placeDescription" :Lt,
+                 "address":Addr,
+	               "latitude" : Lati,
+	               "longitude" : Long,
+	               "quiz" : Quiz,
+	               "quizAnswer" : Ans
+             }
+         }).then((res)=>{
+             console.log("통신성공")
+             console.log(res);
+              <Link to='/gift3'/>
+         }).catch(error=>{
+             console.log("통신실패");
+             console.log(error);
+             throw new Error(error);
+         });
         
     }
   };
