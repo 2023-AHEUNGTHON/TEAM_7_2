@@ -1,7 +1,7 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import {useNavigate} from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import SaveLocation from "../components/SaveLocation";
 import useKakaoLoader from "../components/useKakaoLoader";
 import Button2 from "../components/Button2";
@@ -17,22 +17,31 @@ const Modal = styled.div`
   border-radius: 20px;
 `;
 
+const ModalContent = styled.div`
+  width: 24.5625rem;
+  height: 32.0625rem;
+  background-color: #fff;
+  border-radius: 20px 20px 0 0;
+  text-align: center;
+`;
+
 const Info = styled.p`
   font-size: 1.125rem;
   font-weight: 600;
+  margin-top: 0.4rem;
 `;
 
 const Address = styled.div`
-  display: flex;
   width: 21.5625rem;
   height: 2.8125rem;
   background-color: #fafafa;
   border-radius: 10px;
   color: #909090;
   font-size: 0.875rem;
+  margin: 0.25rem auto;
 `;
 const markerImage = {
-  src: process.env.PUBLIC_URL + 'img/giftMarker.svg',
+  src: process.env.PUBLIC_URL + "img/giftMarker.svg",
   size: {
     width: 54,
     height: 59,
@@ -46,54 +55,56 @@ const markerImage = {
 };
 
 function Gift0() {
-  //현재위치 
-const [state, setState] = useState({
-  center: {
-    lat: 33.450701,
-    lng: 126.570667,
-  },
-  errMsg: null,
-  isLoading: true,
-})
-useEffect(() => {
-  if (navigator.geolocation) {
-    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setState((prev) => ({
-          ...prev,
-          center: {
-            lat: position.coords.latitude, // 위도
-            lng: position.coords.longitude, // 경도
-          },
-          isLoading: false,
-        }))
-      },
-      (err) => {
-        setState((prev) => ({
-          ...prev,
-          errMsg: err.message,
-          isLoading: false,
-        }))
-      }
-    )
-  } else {
-    // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-    setState((prev) => ({
-      ...prev,
-      errMsg: "geolocation을 사용할수 없어요..",
-      isLoading: false,
-    }))
-  }
-}, [])
+  const location=useLocation();
+  
 
-  const navigate=useNavigate();
+  //현재위치
+  const [state, setState] = useState({
+    center: {
+      lat: 33.450701,
+      lng: 126.570667,
+    },
+    errMsg: null,
+    isLoading: true,
+  });
+  useEffect(() => {
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setState((prev) => ({
+            ...prev,
+            center: {
+              lat: position.coords.latitude, // 위도
+              lng: position.coords.longitude, // 경도
+            },
+            isLoading: false,
+          }));
+        },
+        (err) => {
+          setState((prev) => ({
+            ...prev,
+            errMsg: err.message,
+            isLoading: false,
+          }));
+        }
+      );
+    } else {
+      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+      setState((prev) => ({
+        ...prev,
+        errMsg: "geolocation을 사용할수 없어요..",
+        isLoading: false,
+      }));
+    }
+  }, []);
+
+  const navigate = useNavigate();
   const [position, setPosition] = useState();
-  const [lati,setLat]=useState(); //위도
-  const [long,setLng]=useState(); //경도
+  const [lati, setLat] = useState(); //위도
+  const [long, setLng] = useState(); //경도
   const [clickedAddress, setClickedAddress] = useState("");
   useKakaoLoader();
-  
 
   const searchDetailAddrFromCoords = (coords, callback) => {
     const geocoder = new window.kakao.maps.services.Geocoder();
@@ -124,16 +135,16 @@ useEffect(() => {
 
   const handleSubmit = () => {
     console.log(clickedAddress);
-    console.log(lati,long);
-    navigate('/gift',{
-        state:{
-            Address:clickedAddress,
-            Latitude:lati,
-            Longitude:long
-            
-        }
-  });
-}
+    console.log(lati, long);
+    navigate("/gift", {
+      state: {
+        Address: clickedAddress,
+        Latitude: lati,
+        Longitude: long,
+        UserId:location.state.user
+      },
+    });
+  };
 
   return (
     <>
@@ -149,18 +160,18 @@ useEffect(() => {
             lng: mouseEvent.latLng.getLng(),
           });
           handleMarkerClick(mouseEvent);
-        // setLat(coords.getLat);
-        // setLng(coords.getLng);
+          // setLat(coords.getLat);
+          // setLng(coords.getLng);
         }}
       >
-        {position && <MapMarker position={position} image={markerImage}/>}
+        {position && <MapMarker position={position} image={markerImage} />}
       </Map>
       <Modal>
-        <Info>내가 선물할 장소의 주소는 여기에요!</Info>
-        <Address>
-         {clickedAddress && <p>{clickedAddress}</p>}
-        </Address>
-        <Button2 onClick={handleSubmit} text="이 위치로 정할게요" />
+        <ModalContent>
+          <Info>내가 선물할 장소의 주소는 여기에요!</Info>
+          <Address>{clickedAddress && <p>{clickedAddress}</p>}</Address>
+          <Button2 onClick={handleSubmit} text="이 위치로 정할게요" />
+        </ModalContent>
       </Modal>
     </>
   );
