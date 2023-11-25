@@ -66,7 +66,7 @@ function Gift3() {
           </LottieBox>
           <CompleteHeader>장소 선물 완료</CompleteHeader>
           <CompleteSub>숭멋사 님에게 전달 완료 했어요.</CompleteSub>
-          <Link to="/main">
+          <Link to="/maintest">
             <Btn>확인</Btn>
           </Link>
         </ModalContent>

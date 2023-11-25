@@ -90,7 +90,5 @@ function Gift2() {
         <Button2 onClick={handleSubmit} text="다음으로" />
     </Wrapper>
     )
-}
-
-export default Gift2;
+}export default Gift2;
 

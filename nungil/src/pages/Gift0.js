@@ -175,5 +175,4 @@ function Gift0() {
       </Modal>
     </>
   );
-}
-export default Gift0;
+}export default Gift0;

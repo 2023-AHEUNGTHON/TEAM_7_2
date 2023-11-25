@@ -9,6 +9,4 @@ const Box = styled.p`
 
 function Sub(props) {
     return <Box>{props.explan}</Box>
-}
-
-export default Sub;
+}export default Sub;

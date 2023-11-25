@@ -107,10 +107,10 @@ function Gift22() {
         <Tip text="*최대 8자까지"></Tip>
       </Setting>
       <CenterBox>
+        <Link to='/gift3'>
         <Button2 text="장소선물 완료하기" type="submit" onClick={handleSubmit} />
+        </Link>
       </CenterBox>
     </>
   );
-}
-
-export default Gift22;
+}export default Gift22;

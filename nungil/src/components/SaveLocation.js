@@ -44,6 +44,4 @@ function SaveLocation() {
       <Select></Select> */}
     </>
   );
-}
-
-export default SaveLocation;
+}export default SaveLocation;

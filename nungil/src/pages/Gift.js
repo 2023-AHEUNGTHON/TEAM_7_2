@@ -6,10 +6,7 @@ import Backspace from "../components/Backspace";
 import Sub from "../components/Sub";
 import Button2 from "../components/Button2";
 
-const Wrapper=styled.div`
-    display:flex;
-    flex-direction:column;
-`;
+
 const Input=styled.input`
     width:338px;
     height:45px;

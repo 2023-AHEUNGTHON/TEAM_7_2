@@ -79,7 +79,5 @@ function Gift1() {
 
     </Wrapper>
     )
-}
-
-export default Gift1;
+}export default Gift1;
 

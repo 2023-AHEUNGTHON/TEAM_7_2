@@ -9,6 +9,4 @@ const Head = styled.p`
 
 function Header(props) {
     return <Head>{props.head}</Head>
-}
-
-export default Header;
+}export default Header;
