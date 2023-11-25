@@ -1,6 +1,6 @@
 import React, { useState,useEffect} from "react";
 import { Map, MapMarker} from "react-kakao-maps-sdk";
-import axios from "axios"
+import axios from "axios";
 import useKakaoLoader from "../components/useKakaoLoader";
 import PlacesData from "../db/places.json";
 import GiftBtn from "../components/GiftBtn";
@@ -70,10 +70,7 @@ function MainTest() {
       src: isSelected
         ? process.env.PUBLIC_URL + "/img/giftMarker.svg"
         : process.env.PUBLIC_URL + "/img/basicMarker.svg",
-      size: {
-        width: 64,
-        height: 69,
-      },
+      size: isSelected? {width: 64,height: 69}:{width:30,height:35},
       options: {
         offset: {
           x: 27,
@@ -100,8 +97,7 @@ function MainTest() {
           isSelected={selectedMarker === index}
         />
       ))}
-      {/* map으로 받아왔더니 오류 => 비동기방식으로 */}
-      <Infor placeName="" address=""/>
+      <Infor/>
       <PinNum />
       <GiftBtn />
     </Map>

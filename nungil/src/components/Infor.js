@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import Slider from "react-slick";
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 //클릭 x 
 const Div=styled.div`
@@ -58,16 +55,9 @@ const ImgDiv2=styled.div`
 `;
 //props로 클릭된 props 받아오기
 function Infor(props){
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-      };
+    
     return(
         <>
-        <Slider {...settings}>
         <Div>
             <ImgDiv2>
             <img src={`${process.env.PUBLIC_URL}/img/basicmarker.svg`}/>
@@ -80,31 +70,7 @@ function Infor(props){
             </ImgDiv>
             </Link>
         </Div>
-        <Div>
-            <ImgDiv2>
-            <img src={`${process.env.PUBLIC_URL}/img/basicmarker.svg`}/>
-            </ImgDiv2>
-            <Loc>{props.placeName}</Loc>
-            <Add>{props.address}</Add>
-            <Link to='/gift0'>
-            <ImgDiv>
-            <img src={`${process.env.PUBLIC_URL}/img/letter.svg`}/>
-            </ImgDiv>
-            </Link>
-        </Div>
-        <Div>
-            <ImgDiv2>
-            <img src={`${process.env.PUBLIC_URL}/img/basicmarker.svg`}/>
-            </ImgDiv2>
-            <Loc>{props.placeName}</Loc>
-            <Add>{props.address}</Add>
-            <Link to='/gift0'>
-            <ImgDiv>
-            <img src={`${process.env.PUBLIC_URL}/img/letter.svg`}/>
-            </ImgDiv>
-            </Link>
-        </Div>
-        </Slider>
+        
         </>
     )
 
