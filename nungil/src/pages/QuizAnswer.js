@@ -13,6 +13,7 @@ const Question = styled.div`
   font-size: 1.25rem;
   font-weight: 600;
   color: #262626;
+  margin-bottom: 50px;
 `;
 
 const InputBox = styled.input`
@@ -32,7 +33,13 @@ const Info = styled.p`
   font-size: 0.6875rem;
   font-weight: 500;
   color: #ef4a3e;
+  margin-bottom: 50px;
 `;
+
+const MainBox = styled.div`
+  margin-left: 8%;
+
+`
 
 function QuizAnswer() {
   return (
@@ -40,6 +47,7 @@ function QuizAnswer() {
       <Link to="/quizmodal">
         <Backspace />
       </Link>
+      <MainBox>
       <Logo>Q.</Logo>
       <Question>
         [동물퀴즈] 숭실대학교의 상징 동물은 말입니다. 마스코트의 이름은
@@ -48,6 +56,7 @@ function QuizAnswer() {
       <InputBox type="text" placeholder="정답을 입력하세요"></InputBox>
       <Info>글자 수는 3개이고, '슝_이' 입니다.</Info>
       <Button2 text="답변 제출하기" />
+      </MainBox>
     </>
   );
 }
