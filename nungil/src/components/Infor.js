@@ -74,7 +74,7 @@ function Infor(props){
             </ImgDiv2>
             <Loc>{props.placeName}</Loc>
             <Add>{props.address}</Add>
-            <Link to='/gift0'>
+            <Link to='/readtext'>
             <ImgDiv onClick={handleSubmit}>
             <img src={`${process.env.PUBLIC_URL}/img/letter.svg`}/>
             </ImgDiv>

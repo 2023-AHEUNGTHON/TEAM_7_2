@@ -65,9 +65,9 @@ function ReadText() {
       <ModalBg />
       <Modal>
         <ModalContent>
-            <Text>{letter}
+            <Text>어흥올림픽화이팅
             </Text>
-            <Name>{name}</Name>
+            <Name>숭멋사</Name>
         </ModalContent>
       </Modal>
      {/*백그라운드 사진 */}
