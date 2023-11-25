@@ -31,7 +31,7 @@ function App() {
     <Setting>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Gift />} />
+          <Route path="/" element={<Basic />} />
           <Route path="/createmap" element={<CreateMap />} />
           <Route path="/main" element={<Main />} />
 
