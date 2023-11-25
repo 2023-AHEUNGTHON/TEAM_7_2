@@ -42,7 +42,7 @@ function App() {
           <Route path="/gift2" element={<Gift2 />} />
           <Route path="/gift22" element={<Gift22 />} />
           <Route path="/gift3" element={<Gift3 />} />
-          <Route path="/main0" element={<Main0 />} /> 
+          <Route path="main0" element={<Main0 />} /> 
           <Route path="/readtext" element={<ReadText />} />
 
           <Route path="/quizmodal" element={<QuizModal />} />

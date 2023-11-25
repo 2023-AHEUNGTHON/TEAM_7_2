@@ -4,7 +4,7 @@ const Div=styled.div`
 position:absolute;
 bottom:25px;
 right:300px;
-z-index:10;
+z-index:1;
 `;
 function GiftBtn(){
     return(

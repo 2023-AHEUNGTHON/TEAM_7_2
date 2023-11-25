@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 const Div=styled.div`
 position:absolute;
@@ -18,21 +19,21 @@ const Number=styled.div`
     bottom:13px;
     right:11px;
 `;
-function PinNum(){
-    const [num,setNum]=useState();
-    function ChangeHandler(){
-        axios.get(`https://api.nungil.shop/api/user/${1}/places/count`
-        ).then((res)=>{
-        console.log(res);
-        setNum(res);
-        }).catch((Error)=>{
-        console.log(Error);
-        })
-    }
+function PinNum(props){
+    // const [num,setNum]=useState();
+    // function ChangeHandler(){
+    //     axios.get(`https://api.nungil.shop/api/user/${props.UserID}/places/count`
+    //     ).then((res)=>{
+    //     console.log(res);
+    //     setNum(res.placeCount);
+    //     }).catch((Error)=>{
+    //     console.log(Error);
+    //     })
+    // }
     return(
         <Div>
         <img src={`${process.env.PUBLIC_URL}/img/Num.svg`} />
-        <Number onChange={ChangeHandler}>{num}개</Number>
+        {/* <Number onChange={ChangeHandler}>{num}개</Number> */}
         </Div>
     )
 }export default PinNum;

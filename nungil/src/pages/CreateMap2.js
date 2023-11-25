@@ -75,7 +75,7 @@ function CreateMap2() {
   const userId = new URLSearchParams(location.search).get("userId");
 
   const handleClick = () => {
-    handleCopyClick("https://api.nungil.shop/api/user/" + userId); // 원하는 URL로 변경, 추후 동적으로 변경해줘야 함
+    handleCopyClick("https://team-7-2.vercel.app/main0/" + userId); // 원하는 URL로 변경, 추후 동적으로 변경해줘야 함
   };
   return (
     <>
@@ -93,7 +93,7 @@ function CreateMap2() {
       </Setting>
       <CenterText>공유 링크</CenterText>
       <Address onClick={handleClick}>
-        <p>https://api.nungil.shop/api/user/{userId}</p>
+        <p>{"https://team-7-2.vercel.app/main0/" + userId}</p>
       </Address>
       <CenterBox>
         <ImgBox>
