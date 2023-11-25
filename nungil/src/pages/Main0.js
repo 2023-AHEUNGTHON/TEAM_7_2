@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import {useLocation,useNavigate} from "react-router-dom";
 import ModalBg from "../components/ModalBg";
-import Main from "../pages/Main";
+
 import Explan from "../assets/modal/explan.png";
 import Button2 from "../components/Button2";
+import MainTest from "./MainTest";
 
 const Modal = styled.div`
   position: fixed;
@@ -60,6 +62,31 @@ const LaterBtn = styled.button`
 `;
 
 function Main0() {
+  const location=useLocation();
+  const navigate=useNavigate();
+
+
+  const params = new URLSearchParams(location.search);
+
+  let userId = params.get("userId");
+
+  console.log("params.get('name') >>> ", userId);
+
+  const handleSubmit = () => {
+    navigate('/gift',{
+        state:{
+          ui:userId
+        }
+  });
+}
+  const handleSubmit2 = () => {
+    navigate('/MainTest',{
+        state:{
+          ui:userId
+        }
+  });
+}
+
   return (
     <>
       <ModalBg />
@@ -79,11 +106,11 @@ function Main0() {
             </Black>
           </FlexBox>
           <img src={Explan} alt="설명" />
-          <Button2 text="장소 선물하러 가기" />
-          <LaterBtn>다음에 할게요</LaterBtn>
+          <Button2 onClick={handleSubmit} text="장소 선물하러 가기" />
+          <LaterBtn onClick={handleSubmit2}> 다음에 할게요</LaterBtn>
         </ModalContent>
       </Modal>
-      <Main />
+      <MainTest />
     </>
   );
 }
