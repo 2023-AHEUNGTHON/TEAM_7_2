@@ -65,7 +65,8 @@ function Gift2() {
                 QUIZ:quiz,
                 ADD:location.state.add,
                 LAT:location.state.lat,
-                LNG:location.state.lng
+                LNG:location.state.lng,
+                UI:location.state.ui
             }
           });
         
@@ -89,7 +90,5 @@ function Gift2() {
         <Button2 onClick={handleSubmit} text="다음으로" />
     </Wrapper>
     )
-}
-
-export default Gift2;
+}export default Gift2;
 
