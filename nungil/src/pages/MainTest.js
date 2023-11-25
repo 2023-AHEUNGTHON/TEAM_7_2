@@ -1,13 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import axios from "axios";
+import {useLocation} from "react-router-dom";
 import useKakaoLoader from "../components/useKakaoLoader";
 import GiftBtn from "../components/GiftBtn";
 import PinNum from "../components/PinNum";
 import Infor from "../components/Infor";
+import styled from "styled-components";
+
+const Div=styled.div`
+position:absolute;
+bottom:100px;
+right:297px;
+z-index:1;
+`;
+
+const Number=styled.div`
+    position:absolute;
+    z-index:1;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    color:#ffffff;
+    bottom:13px;
+    right:11px;
+`;
 
 function MainTest() {
   useKakaoLoader();
+
+  const location=useLocation();
+  const USERID=location.state.user;
+  console.log(USERID);
+  //핀넘버
+   const [num,setNum]=useState();
+   function PinNum(){
+      console.log(USERID);
+       axios.get(`https://api.nungil.shop/api/user/${USERID}/places/count`
+       ).then((res)=>{
+       console.log(res);
+       setNum(res.placeCount);
+       }).catch((Error)=>{
+       console.log(Error);
+      })
+    };
 
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [placeInfo, setPlaceInfo] = useState({ name: "", address: "" });
@@ -38,7 +74,7 @@ function MainTest() {
     // Axios로 데이터 가져오기
     axios({
       method: "GET",
-      url: `https://api.nungil.shop/api/user/${1}/places`,
+      url: `https://api.nungil.shop/api/user/${USERID}/places`,
     })
       .then((res) => {
         console.log("통신 성공");
@@ -104,12 +140,11 @@ function MainTest() {
         placeName={placeInfo.name}
         address={placeInfo.address}
       />
-      <PinNum />
+      <Div>
+        <img src={`${process.env.PUBLIC_URL}/img/Num.svg`} />
+        <Number onChange={PinNum}>{num}개</Number>
+        </Div>
       <GiftBtn />
     </Map>
   );
-}
-
-
-export default MainTest;
-
+}export default MainTest;
